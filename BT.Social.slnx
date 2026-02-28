@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="BT.Social.ConsoleApp/BT.Social.ConsoleApp.csproj" />
+  <Project Path="BT.Social.Core/BT.Social.Core.csproj" />
+</Solution>

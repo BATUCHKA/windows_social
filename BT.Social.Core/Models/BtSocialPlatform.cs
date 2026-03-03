@@ -19,7 +19,6 @@ namespace BT.Social.Core.Models
     /// <summary>Харилцан үйлдлийн service</summary>
     public InteractionService InteractionService { get; }
 
-    /* Repository-уудыг дотоод хэрэгцээнд хадгална */
     private readonly UserRepository _userRepo;
     private readonly PostRepository _postRepo;
 
@@ -30,11 +29,9 @@ namespace BT.Social.Core.Models
     public BtSocialPlatform()
         : base("BT Social", "Монголын нийгмийн сүлжээний платформ")
     {
-      // Repository-уудыг үүсгэнэ
       _userRepo = new UserRepository();
       _postRepo = new PostRepository();
 
-      // Service-үүдэд repository-уудыг дамжуулна
       UserService = new UserService(_userRepo);
       PostService = new PostService(_postRepo, _userRepo);
       InteractionService = new InteractionService(_postRepo, _userRepo);

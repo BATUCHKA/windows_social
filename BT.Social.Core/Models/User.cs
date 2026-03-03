@@ -31,7 +31,6 @@ namespace BT.Social.Core.Models
     /// <summary>Бүртгүүлсэн огноо</summary>
     public DateTime CreatedAt { get; }
 
-    /* Найзуудын жагсаалт - хэрэглэгчийн нийгмийн холбоосыг илэрхийлнэ */
     private readonly List<Guid> _friendIds = new();
 
     /// <summary>Найзуудын ID жагсаалт (зөвхөн унших)</summary>

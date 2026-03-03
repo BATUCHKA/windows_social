@@ -82,8 +82,6 @@ namespace BT.Social.Core.Services
       comment.AddReaction(userId, type);
     }
 
-    /* Туслах методууд - давтагдах логикийг нэгтгэнэ (DRY) */
-
     private Post GetPostOrThrow(Guid postId)
     {
       return _postRepo.GetById(postId)

@@ -8,7 +8,6 @@ namespace BT.Social.Core.Models
   /// </summary>
   public class Comment : ContentBase, ILikeable
   {
-    /* Сэтгэгдэл дээрх хариу үйлдлүүд */
     private readonly List<Reaction> _reactions = new();
 
     /// <summary>
@@ -24,7 +23,6 @@ namespace BT.Social.Core.Models
     /// <inheritdoc/>
     public void AddReaction(Guid userId, ReactionType type)
     {
-      // Нэг хэрэглэгч нэг л reaction өгөх боломжтой
       RemoveReaction(userId);
       _reactions.Add(new Reaction(userId, type));
     }

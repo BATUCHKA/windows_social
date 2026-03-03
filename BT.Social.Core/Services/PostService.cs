@@ -30,7 +30,6 @@ namespace BT.Social.Core.Services
     /// <returns>Үүсгэсэн нийтлэл</returns>
     public Post CreatePost(Guid authorId, string text, PrivacyLevel privacy = PrivacyLevel.Public)
     {
-      // Зохиогч байгаа эсэхийг шалгана
       if (_userRepo.GetById(authorId) == null)
         throw new InvalidOperationException("Зохиогч олдсонгүй.");
 

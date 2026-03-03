@@ -28,7 +28,6 @@ namespace BT.Social.Core.Services
     /// <returns>Үүсгэсэн хэрэглэгч</returns>
     public User Register(string username, string email, byte age)
     {
-      // Нэр давхцаж байгаа эсэхийг шалгана
       if (_userRepo.GetByUsername(username) != null)
         throw new InvalidOperationException($"'{username}' нэр аль хэдийн бүртгэлтэй байна.");
 
@@ -59,7 +58,6 @@ namespace BT.Social.Core.Services
       if (user1 == null || user2 == null)
         throw new InvalidOperationException("Хэрэглэгч олдсонгүй.");
 
-      // Харилцан найз болгоно
       user1.AddFriend(userId2);
       user2.AddFriend(userId1);
     }

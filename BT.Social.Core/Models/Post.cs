@@ -24,12 +24,9 @@ namespace BT.Social.Core.Models
     {
     }
 
-    // ==================== ILikeable ====================
-
     /// <inheritdoc/>
     public void AddReaction(Guid userId, ReactionType type)
     {
-      // Нэг хэрэглэгч нэг л reaction өгнө - хуучныг устгаад шинээр нэмнэ
       RemoveReaction(userId);
       _reactions.Add(new Reaction(userId, type));
     }
@@ -42,8 +39,6 @@ namespace BT.Social.Core.Models
 
     /// <inheritdoc/>
     public int GetReactionCount() => _reactions.Count;
-
-    // ==================== ICommentable ====================
 
     /// <inheritdoc/>
     public void AddComment(Comment comment)
@@ -59,8 +54,6 @@ namespace BT.Social.Core.Models
 
     /// <inheritdoc/>
     public IReadOnlyList<Comment> GetComments() => _comments.AsReadOnly();
-
-    // ==================== IShareable ====================
 
     /// <inheritdoc/>
     public void Share(Guid userId)

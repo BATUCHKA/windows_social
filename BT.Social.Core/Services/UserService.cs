@@ -3,29 +3,16 @@ using BT.Social.Core.Repositories;
 
 namespace BT.Social.Core.Services
 {
-  /// <summary>
-  /// Хэрэглэгчтэй холбоотой бизнес логикийг удирдах service.
-  /// </summary>
   public class UserService
   {
     private readonly UserRepository _userRepo;
 
-    /// <summary>
-    /// UserService үүсгэх.
-    /// </summary>
-    /// <param name="userRepo">Хэрэглэгчийн repository</param>
     public UserService(UserRepository userRepo)
     {
       _userRepo = userRepo;
     }
 
-    /// <summary>
-    /// Шинэ хэрэглэгч бүртгэх.
-    /// </summary>
-    /// <param name="username">Хэрэглэгчийн нэр</param>
-    /// <param name="email">Имэйл хаяг</param>
-    /// <param name="age">Нас</param>
-    /// <returns>Үүсгэсэн хэрэглэгч</returns>
+    // шинэ хэрэглэгч бүртгэх
     public User Register(string username, string email, byte age)
     {
       if (_userRepo.GetByUsername(username) != null)
@@ -36,20 +23,9 @@ namespace BT.Social.Core.Services
       return user;
     }
 
-    /// <summary>
-    /// Хэрэглэгчийн мэдээлэл авах.
-    /// </summary>
-    /// <param name="userId">Хэрэглэгчийн ID</param>
-    public User? GetProfile(Guid userId)
-    {
-      return _userRepo.GetById(userId);
-    }
+    public User? GetProfile(Guid userId) => _userRepo.GetById(userId);
 
-    /// <summary>
-    /// Хоёр хэрэглэгчийг найз болгох (харилцан).
-    /// </summary>
-    /// <param name="userId1">Эхний хэрэглэгчийн ID</param>
-    /// <param name="userId2">Хоёр дахь хэрэглэгчийн ID</param>
+    // хоёр хэрэглэгчийг найз болгоно (2 талдаа нэмнэ)
     public void AddFriend(Guid userId1, Guid userId2)
     {
       var user1 = _userRepo.GetById(userId1);
@@ -62,9 +38,6 @@ namespace BT.Social.Core.Services
       user2.AddFriend(userId1);
     }
 
-    /// <summary>
-    /// Найзын холбоосыг устгах (харилцан).
-    /// </summary>
     public void RemoveFriend(Guid userId1, Guid userId2)
     {
       var user1 = _userRepo.GetById(userId1);
@@ -77,9 +50,6 @@ namespace BT.Social.Core.Services
       user2.RemoveFriend(userId1);
     }
 
-    /// <summary>
-    /// Бүх хэрэглэгчдийг буцаана.
-    /// </summary>
     public IReadOnlyList<User> GetAllUsers() => _userRepo.GetAll();
   }
 }

@@ -4,30 +4,17 @@ using BT.Social.Core.Repositories;
 
 namespace BT.Social.Core.Services
 {
-  /// <summary>
-  /// Нийтлэлтэй холбоотой бизнес логикийг удирдах service.
-  /// </summary>
   public class PostService
   {
     private readonly PostRepository _postRepo;
     private readonly UserRepository _userRepo;
 
-    /// <summary>
-    /// PostService үүсгэх.
-    /// </summary>
     public PostService(PostRepository postRepo, UserRepository userRepo)
     {
       _postRepo = postRepo;
       _userRepo = userRepo;
     }
 
-    /// <summary>
-    /// Шинэ нийтлэл үүсгэх.
-    /// </summary>
-    /// <param name="authorId">Зохиогчийн ID</param>
-    /// <param name="text">Нийтлэлийн текст</param>
-    /// <param name="privacy">Нууцлалын түвшин</param>
-    /// <returns>Үүсгэсэн нийтлэл</returns>
     public Post CreatePost(Guid authorId, string text, PrivacyLevel privacy = PrivacyLevel.Public)
     {
       if (_userRepo.GetById(authorId) == null)
@@ -38,17 +25,9 @@ namespace BT.Social.Core.Services
       return post;
     }
 
-    /// <summary>
-    /// Нийтлэл устгах.
-    /// </summary>
-    public bool DeletePost(Guid postId)
-    {
-      return _postRepo.Remove(postId);
-    }
+    public bool DeletePost(Guid postId) => _postRepo.Remove(postId);
 
-    /// <summary>
-    /// Нийтийн feed - бүх нийтлэлийг шинэ нь эхэнд байхаар буцаана.
-    /// </summary>
+    // feed - шинэ нийтлэл эхэнд
     public IReadOnlyList<Post> GetFeed()
     {
       return _postRepo.GetAll()
@@ -57,12 +36,6 @@ namespace BT.Social.Core.Services
           .AsReadOnly();
     }
 
-    /// <summary>
-    /// Тодорхой хэрэглэгчийн нийтлэлүүдийг буцаана.
-    /// </summary>
-    public IReadOnlyList<Post> GetUserPosts(Guid authorId)
-    {
-      return _postRepo.GetByAuthorId(authorId);
-    }
+    public IReadOnlyList<Post> GetUserPosts(Guid authorId) => _postRepo.GetByAuthorId(authorId);
   }
 }

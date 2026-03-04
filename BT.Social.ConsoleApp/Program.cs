@@ -3,19 +3,17 @@ using BT.Social.Core.Models;
 
 namespace BT.Social.ConsoleApp
 {
-  /// <summary>
-  /// BT Social платформын демо програм.
-  /// DLL (BT.Social.Core) сангаас reference хийж ашиглаж байна.
-  /// </summary>
   class Program
   {
     static void Main(string[] args)
     {
       Console.OutputEncoding = System.Text.Encoding.UTF8;
 
+      // платформ үүсгэх
       var platform = new BtSocialPlatform();
       PrintHeader($"Платформ үүслээ: {platform}");
 
+      // --- Хэрэглэгчид бүртгэх ---
       PrintHeader("ХЭРЭГЛЭГЧИД БҮРТГЭХ");
 
       var bat = platform.CreateUser("Bat", "bat@email.com", 22);
@@ -26,8 +24,10 @@ namespace BT.Social.ConsoleApp
       Console.WriteLine($"  + {sarnai}");
       Console.WriteLine($"  + {bold}");
 
+      // byte төрлийг шалгая
       Console.WriteLine($"\n  Bat-ын нас (byte): {bat.Age}, төрөл: {bat.Age.GetType().Name}");
 
+      // --- Найзууд ---
       PrintHeader("НАЙЗУУД НЭМЭХ");
 
       platform.UserService.AddFriend(bat.Id, sarnai.Id);
@@ -37,6 +37,7 @@ namespace BT.Social.ConsoleApp
       Console.WriteLine($"  {bat.Username} <-> {bold.Username} найз боллоо");
       Console.WriteLine($"  {bat.Username}-н найзууд: {bat.FriendIds.Count}");
 
+      // --- Нийтлэлүүд ---
       PrintHeader("НИЙТЛЭЛ ҮҮСГЭХ");
 
       var post1 = platform.CreatePost(bat.Id, "Өнөөдөр маш сайхан цаг агаар байна!");
@@ -47,6 +48,7 @@ namespace BT.Social.ConsoleApp
       Console.WriteLine($"  [{sarnai.Username}] {post2}");
       Console.WriteLine($"  [{bold.Username}] {post3}");
 
+      // --- Reaction ---
       PrintHeader("REACTION ӨГӨХ");
 
       platform.InteractionService.ReactToPost(post1.Id, sarnai.Id, ReactionType.Love);
@@ -59,6 +61,7 @@ namespace BT.Social.ConsoleApp
       Console.WriteLine($"  Post2 reactions: {post2.GetReactionCount()}");
       Console.WriteLine($"  Post3 reactions: {post3.GetReactionCount()}");
 
+      // --- Сэтгэгдэл ---
       PrintHeader("СЭТГЭГДЭЛ БИЧИХ");
 
       var comment1 = platform.InteractionService.CommentOnPost(
@@ -76,9 +79,11 @@ namespace BT.Social.ConsoleApp
       foreach (var c in post3.GetComments())
         Console.WriteLine($"  {c}");
 
+      // comment дээр reaction
       platform.InteractionService.ReactToComment(post1.Id, comment1.Id, bat.Id, ReactionType.Like);
       Console.WriteLine($"\n  Comment1 reactions: {comment1.GetReactionCount()}");
 
+      // --- Share ---
       PrintHeader("ХУВААЛЦАХ");
 
       platform.InteractionService.SharePost(post3.Id, bat.Id);
@@ -86,26 +91,25 @@ namespace BT.Social.ConsoleApp
 
       Console.WriteLine($"  Post3 shares: {post3.GetShareCount()}");
 
+      // --- Feed ---
       PrintHeader("FEED (бүх нийтлэлүүд)");
 
       var feed = platform.PostService.GetFeed();
-      int index = 1;
+      int i = 1;
       foreach (var post in feed)
       {
         var author = platform.UserService.GetProfile(post.AuthorId);
-        Console.WriteLine($"  {index}. [{author?.Username}] {post}");
+        Console.WriteLine($"  {i}. [{author?.Username}] {post}");
 
-        if (post.GetComments().Count > 0)
+        foreach (var comment in post.GetComments())
         {
-          foreach (var comment in post.GetComments())
-          {
-            var commentAuthor = platform.UserService.GetProfile(comment.AuthorId);
-            Console.WriteLine($"       - {commentAuthor?.Username}: {comment.Text}");
-          }
+          var cAuthor = platform.UserService.GetProfile(comment.AuthorId);
+          Console.WriteLine($"       - {cAuthor?.Username}: {comment.Text}");
         }
-        index++;
+        i++;
       }
 
+      // --- Story ---
       PrintHeader("STORY");
 
       var story = new Story(bat.Id, "Өнөөдрийн мөч...");
@@ -114,6 +118,7 @@ namespace BT.Social.ConsoleApp
       Console.WriteLine($"  {story}");
       Console.WriteLine($"  Дуусах хугацаа: {story.ExpiresAt}");
 
+      // --- Зурвас ---
       PrintHeader("ЗУРВАС");
 
       var msg = new Message(bat.Id, sarnai.Id, "Сайн уу, юу хийж байна?");
@@ -124,9 +129,6 @@ namespace BT.Social.ConsoleApp
       PrintHeader("ДЕМО ДУУСЛАА");
     }
 
-    /// <summary>
-    /// Хэсгийн гарчгийг форматтайгаар хэвлэнэ.
-    /// </summary>
     static void PrintHeader(string title)
     {
       Console.WriteLine();

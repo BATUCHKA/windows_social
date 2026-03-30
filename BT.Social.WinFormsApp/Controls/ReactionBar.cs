@@ -3,11 +3,6 @@ using System.Drawing.Drawing2D;
 
 namespace BT.Social.WinFormsApp.Controls;
 
-/// <summary>
-/// Facebook-style reaction emoji bar.
-/// Custom Properties: EmojiSize, BarBackgroundColor
-/// Custom Event: ReactionSelected
-/// </summary>
 public class ReactionBar : Control
 {
     private int _emojiSize = 32;

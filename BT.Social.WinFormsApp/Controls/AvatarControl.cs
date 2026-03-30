@@ -3,11 +3,6 @@ using System.Drawing.Drawing2D;
 
 namespace BT.Social.WinFormsApp.Controls;
 
-/// <summary>
-/// Instagram-style circular avatar with gradient border ring.
-/// Custom Properties: BorderGradientStart, BorderGradientEnd
-/// Custom Event: AvatarClicked
-/// </summary>
 public class AvatarControl : Control
 {
     private Color _borderGradientStart = Color.FromArgb(255, 214, 0);
@@ -83,7 +78,7 @@ public class AvatarControl : Control
             borderWidth + 2, borderWidth + 2,
             Width - 2 * borderWidth - 5, Height - 2 * borderWidth - 5);
 
-        // Draw gradient border ring
+
         using (var path = new GraphicsPath())
         {
             path.AddEllipse(outerRect);
@@ -92,7 +87,7 @@ public class AvatarControl : Control
             g.DrawEllipse(pen, outerRect);
         }
 
-        // Clip to circle and draw avatar image
+
         using (var clipPath = new GraphicsPath())
         {
             clipPath.AddEllipse(innerRect);
@@ -104,7 +99,7 @@ public class AvatarControl : Control
             }
             else
             {
-                // Draw placeholder with first letter of username
+
                 using var bgBrush = new SolidBrush(Color.FromArgb(200, 200, 220));
                 g.FillEllipse(bgBrush, innerRect);
 
@@ -121,7 +116,7 @@ public class AvatarControl : Control
             g.ResetClip();
         }
 
-        // Hover overlay
+
         if (_isHovered)
         {
             using var clipPath = new GraphicsPath();
